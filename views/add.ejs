@@ -1,0 +1,85 @@
+<html>
+
+<head>
+  <title>Add Data</title>
+  <link rel="stylesheet" href="/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    input[type=text],
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-top: 6px;
+      margin-bottom: 16px;
+      resize: vertical;
+    }
+
+    input[type=submit] {
+      background-color: #04AA6D;
+      color: rgb(13, 34, 222);
+      padding: 30px 25px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type=submit]:hover {
+      background-color: #45a049;
+    }
+
+    .container {
+      border-radius: 5px;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Add Data</h1>
+
+  <div class="container">
+    <form action="/add" method="POST">
+      <div class="form-group">
+        <label for="string">String:</label>
+        <input type="text" name="string" placeholder="String" required>
+
+        <div class="form-group">
+          <label for="integer">Integer:</label>
+          <input type="number" name="integer" placeholder="Integer" required>
+
+          <div class="form-group">
+            <label for="float">Float:</label>
+            <input type="number" name="float" step="any" placeholder="Float" required>
+
+            <div class="form-group">
+              <label for="date">Date:</label>
+              <input type="date" name="date" required>
+
+              <div class="form-group">
+                <label for="boolean">Boolean:</label>
+                <select name="boolean" required>
+                  <option value="0">Choose the boolean..</option>
+                  <option value="true">True</option>
+                  <option value="false">False</option>
+                </select>
+                <button type="submit" class="btn success">SAVE</button>
+                <a href="/" class="btn danger">Cancel</a>
+    </form>
+  </div>
+</body>
+
+</html>

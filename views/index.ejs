@@ -1,0 +1,137 @@
+<!-- <!DOCTYPE html> -->
+<html>
+
+<head>
+  <title>BREAD SQL</title>
+  <link rel="stylesheet" href="/style.css"> <!-- Update the path to the CSS file -->
+
+</head>
+
+<body>
+  <h1>BREAD (Browse.Read,Edit,Add,Delete)</h1>
+
+  <h2>Filter</h2>
+
+  <form action="/filter" method="GET" class="inline-form">
+    <div class="form-group">
+      <label for="id">ID:</label>
+      <input type="text" name="id" placeholder="ID">
+
+      <label for="string">String:</label>
+      <input type="text" name="string" placeholder="String">
+
+      <label for="integer">Integer:</label>
+      <input type="number" name="integer" placeholder="Integer">
+
+      <label for="float">Float:</label>
+      <input type="number" name="float" step="0.01" placeholder="Float">
+
+      <label for="date">Date:</label>
+      <input type="date" name="date">
+
+      <label for="boolean">Boolean:</label>
+      <select name="boolean">
+        <option value="">Choose the boolean..</option>
+        <option value="true">True</option>
+        <option value="false">False</option>
+      </select>
+
+      <button type="submit" class="btn info" onclick="location.href='/filter'">Search</button>
+      <a href="/" class="btn danger">Back</a>
+    </div>
+  </form>
+
+
+
+  <div class="table">
+    <table id="table">
+      <tr>
+        <th>ID</th>
+        <th>String</th>
+        <th>Integer</th>
+        <th>Float</th>
+        <th>Date</th>
+        <th>Boolean</th>
+        <th>Actions</th>
+      </tr>
+
+
+      <% data.forEach((entry, index)=> { %>
+        <tr class="<%= index % 2 === 0 ? 'even' : 'odd' %>">
+          <td>
+            <%= entry.id %>
+          </td>
+          <td>
+            <%= entry.string %>
+          </td>
+          <td>
+            <%= entry.integer %>
+          </td>
+          <td>
+            <%= entry.float %>
+          </td>
+          <td>
+            <%= entry.date %>
+          </td>
+          <td>
+            <% if (entry.boolean===0) { %>
+              false
+              <% } else { %>
+                true
+                <% } %>
+          </td>
+
+          <td>
+            <form action="/edit/<%= entry.id %>" method="GET" class="inline-form">
+              <button type="submit" class="btn button-primary">Edit</button>
+            </form>
+            <form action="/delete/<%= entry.id %>" method="DELETE" class="inline-form">
+              <button type="submit" class="btn danger">Delete</button>
+            </form>
+          </td>
+
+        </tr>
+        <% }); %>
+    </table>
+  </div>
+
+
+
+
+  <nav aria-label="Page navigation example">
+    <ul style="list-style-type: none;" class="pagination">
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <% for (let i = 1; i <= totalPages; i++) { %>
+        <li class="page-item">
+          <a class="page-link" href="/?page=<%= i %>"><%= i %></a>
+        </li>
+      <% } %>
+      <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+
+  </div>
+  </div>
+  <br>
+  <br>
+
+  <div class="button-container">
+    <ul style="list-style-type: none;" class="button-list">
+      <li><a href="/add" class="btn info">Add Data</a></li>
+    </ul>
+  </div>
+
+</body>
+
+</html>

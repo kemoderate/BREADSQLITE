@@ -1,0 +1,178 @@
+/* styles.css */
+
+/* Form Styles */
+
+.form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-group input[type="text"],
+  .form-group input[type="number"],
+  .form-group input[type="date"],
+  .form-group select {
+    width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+  }
+  
+  .form-group input[type="submit"],
+  .button {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  input[type=submit]:hover {
+    background-color: #45a049;
+  }
+
+  .container {
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 10px;
+  }
+  
+  /* Button Styles */
+  
+  .button {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  .button-primary {
+    background-color: #333;
+  }
+  
+  .button-secondary {
+    background-color: #777;
+  }
+  
+  .button-primary:hover,
+  .button-secondary:hover {
+    background-color: #555;
+  }
+  
+  /* Responsive form */
+  @media (max-width: 600px) {
+      .form-group {
+          flex-direction: column;
+      }
+
+      .form-group label {
+          margin-bottom: 0.5rem;
+      }
+  }
+ 
+  /* zebra stripped */
+  * {
+    box-sizing: border-box;
+  }
+  
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #ddd;
+}
+
+.table th .table td {
+    text-align: left;
+    padding: 32px;
+}
+
+.table th {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 120px;
+    text-align: left;
+    background-color: #04AA6D;
+    color: white;	
+}
+
+.table tr:nth-child(even){background-color: #f2f2f2;}
+
+.table tr:hover {background-color: #ddd;}
+
+.table tr.even {
+    background-color: #777575d4;
+}
+
+.table tr.odd {
+    background-color: #f5f7f7;
+}
+
+
+.pagination a {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    margin-bottom: 10px;
+  }
+  
+  .pagination a.active {
+    background-color: dodgerblue;
+    color: white;
+  }
+  
+  .pagecontainer {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .pagination {
+    margin-bottom: 10px;
+  }
+  
+  .button-container {
+    margin-top: auto;
+  }
+  
+  .pagination a:hover:not(.active) {background-color: #ddd;}
+
+  .btn {
+    border: 1px; /* Remove borders */
+    color: white; /* Add a text color */
+    padding: 8px 20px; /* Add some padding */
+    cursor: pointer; /* Add a pointer cursor on mouse-over */
+    margin-top: 10px;
+
+  }
+  
+  .success {background-color: #04AA6D;} /* Green */
+  .success:hover {background-color: #46a049;}
+  
+  .info {background-color: #2196F3;} /* Blue */
+  .info:hover {background: #0b7dda;}
+  
+  .warning {background-color: #ff9800;} /* Orange */
+  .warning:hover {background: #e68a00;}
+  
+  .danger {background-color: #f44336;} /* Red */
+  .danger:hover {background: #da190b;}
+  
+  .default {background-color: #e7e7e7; color: black;} /* Gray */
+  .default:hover {background: #ddd;}
+
+
+
+  /* form  */
+  div {
+    margin: 0px; /* Adjust the value as per your desired spacing */
+  }
+  
+
+  
