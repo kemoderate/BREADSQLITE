@@ -11,7 +11,10 @@
   <div class="container">
     <h1>Edit Data</h1>
     <form action="/edit/<%= entry.id %>" method="POST">
-
+      <div class="form-group">
+        <label for="ID">ID:</label>
+        <input type="text" id="id" name="id" value="<%= entry.id %>" required readonly>
+      </div>
       <div class="form-group">
         <label for="string">String:</label>
         <input type="text" id="string" name="string" value="<%= entry.string %>" required>
@@ -22,7 +25,7 @@
       </div>
       <div class="form-group">
         <label for="float">Float:</label>
-        <input type="number" step="0.01" id="float" name="float" value="<%= entry.float %>" required>
+        <input type="number" step="any" id="float" name="float" value="<%= entry.float %>" required>
       </div>
       <div class="form-group">
         <label for="date">Date:</label>
@@ -35,6 +38,8 @@
           <option value="false" <%=!entry.boolean ? 'selected' : '' %>>False</option>
         </select>
       </div>
+      <br>
+      <br>
       <div class="form-group">
         <button class="button button-primary" type="submit">Save</button>
         <button type="button" onclick="location.href='/'" class="button button-secondary">Cancel</button>

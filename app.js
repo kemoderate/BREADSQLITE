@@ -31,40 +31,75 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 
+app.get('/', function (req, res, next) {
+  // Filters or Searching
+  const params = [];
+  
+  // Filter ID 
+  //done
+  if (req.query.id) {
+    params.push(`id = '${req.query.id}'`);
+  }
+  // Filter string 
+  //done
+  if (req.query.string) {
+    params.push(`string LIKE '%' || '${req.query.string}' || '%'`);
+  }
+  // Filter integer
+  //done
+  if (req.query.integer) {
+    params.push(`integer = '${req.query.integer}'`);
+  }
+  // Filter float
+  //done
+  if (req.query.float) {
+    params.push(`float = '${req.query.float}'`);
+  }
+  // Filter date
+  // bermasalah
+  if (req.query.startDate && req.query.endDate) {
+    params.push(`date BETWEEN '${req.query.startDate}' AND '${req.query.endDate}'`);
+  }
+  // Filter boolean
+  // sisa true yang bermasalah
+  if (req.query.boolean === 'true' || req.query.boolean === 'false') {
+    params.push(`boolean = '${req.query.boolean}'`);
+  }
 
-app.get('/', (req, res) => {
-  const page = parseInt(req.query.page) || 1;
-  const limit = 3;
-  const offset = (page - 1) * limit; // baru di rubah
+  // Pagination
+  let sqlCount = `SELECT count(*) as total FROM entries`;
+  if (params.length > 0) {
+    sqlCount += ` WHERE ${params.join(' AND  ')}`;
+  }
+  db.get(sqlCount, [], (err, row) => {
+    if (err) {
+      console.error(err);
+      return next(err);
+    }
+    const rows = row ? row.total : 0;
+    const page = req.query.page || 1;
+    const limit = 3;
+    const offset = (page - 1) * limit;
+    const pages = Math.ceil(rows / limit);
+    const url = req.url == '/' ? '/?page=1' : req.url
 
-  // select * from entries limit 3 offset 0;
+    let sql = `SELECT * FROM entries`;
+    if (params.length > 0) {
+      sql += ` WHERE ${params.join(' AND  ')}`;
+    }
+    sql += ` LIMIT ${limit} OFFSET ${offset}`;
 
-  db.serialize(() => {
-    db.get('SELECT COUNT(*) as count FROM entries', (err, result) => {
+    db.all(sql, [], (err, rows) => {
       if (err) {
-        console.error(err.message);
-        throw err;
+        console.error(err);
+        return next(err);
       }
-      const totalCount = result.count;
-      const totalPages = Math.ceil(totalCount / limit);
-  
-      db.all('SELECT * FROM entries ORDER BY id LIMIT ? OFFSET ?', [limit, offset], (err, rows) => {
-        if (err) {
-          console.error(err.message);
-          throw err;
-        }
-  
-        const paginatedData = rows;
-        // console.log(paginatedData, 'ini paginated data');
-  
-        res.render('index', { data: paginatedData, totalPages: totalPages, currentPage: page });
-
-      });
+      res.render('index', { title: 'SQLITE-Bread', data: rows, pages, page, query: req.query, url });
     });
-  });  
-})   
-  
-  
+  });
+});
+
+
   
   
 
@@ -76,12 +111,13 @@ app.get('/', (req, res) => {
   });
 
   app.post('/add', (req, res) => {
+    console.log(req.body.string)
     const newData = {
       string: req.body.string,
       integer: parseInt(req.body.integer),
       float: parseFloat(req.body.float),
       date: req.body.date,
-      boolean: req.body.boolean === 'true' ? 1 : 0,
+      boolean: req.body.boolean,
     };
 
     const sql = 'INSERT INTO entries (string, integer, float, date, boolean) VALUES (?, ?, ?, ?, ?)';
@@ -98,18 +134,20 @@ app.get('/', (req, res) => {
   });
 
 
-  app.delete('/delete/:id', (req, res) => {
+  app.post('/delete/:id', (req, res) => {
     const itemId = parseInt(req.params.id);
-
+  
     db.run('DELETE FROM entries WHERE id = ?', [itemId], function (err) {
       if (err) {
         console.error(err.message);
         throw err;
       }
       console.log(`Row(s) deleted: ${this.changes}`);
-      res.sendStatus(200);
+      res.redirect('/');
     });
   });
+  
+  
 
 
 
@@ -136,9 +174,9 @@ app.get('/', (req, res) => {
       integer: parseInt(req.body.integer),
       float: parseFloat(req.body.float),
       date: req.body.date,
-      boolean: req.body.boolean === 'true' ? 1 : 0,
+      boolean: req.body.boolean,
     };
-
+    console.log(updatedData)
     const sql = 'UPDATE entries SET string = ?, integer = ?, float = ?, date = ?, boolean = ? WHERE id = ?';
     const values = [updatedData.string, updatedData.integer, updatedData.float, updatedData.date, updatedData.boolean, entryId];
 
@@ -153,49 +191,6 @@ app.get('/', (req, res) => {
   });
 
 
-  app.get('/filter', (req, res) => {
-    const filter = {
-      string: req.query.string || '',
-      integer: req.query.integer || '',
-      float: req.query.float || '',
-      date: req.query.date || '',
-      boolean: req.query.boolean || '',
-    };
-  
-    const sql = `
-      SELECT * FROM entries
-      WHERE string LIKE '%' || ? || '%'
-        AND integer LIKE '%' || ? || '%'
-        AND float LIKE '%' || ? || '%'
-        AND date LIKE '%' || ? || '%'
-        AND boolean LIKE '%' || ? || '%'
-    `;
-  
-    const values = [filter.string, filter.integer, filter.float, filter.date, filter.boolean];
-  
-    db.serialize(() => {
-      db.get('SELECT COUNT(*) as count FROM entries', (err, result) => {
-        if (err) {
-          console.error(err.message);
-          throw err;
-        }
-  
-        const totalCount = result.count;
-        const totalPages = 1; // Set totalPages to 1 since pagination is not applicable for filtered results
-  
-        db.all(sql, values, (err, rows) => {
-          if (err) {
-            console.error(err.message);
-            throw err;
-          }
-  
-          const paginatedData = rows;
-  
-          res.render('index', { data: paginatedData, totalPages: totalPages, currentPage: 1 });
-        });
-      });
-    });
-  });  
 
 
 

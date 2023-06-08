@@ -1,28 +1,165 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+input[type=text],
+select,
+textarea{
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+input[type=date]{
+  width: 20%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label{
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+button[type=submit]{
+  background-color: rgb(0,123,255);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 10px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+.container{
+  border-radius: 5px;
+  padding: 20px;
+}
+.col-25{
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75{
+  float: left;
+  width: 75%;
+  margin-top: 6px;
+}
+
+.row::after{
+  content:"";
+  display : table;
+  clear: both;
+}
+
+#table{
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#table td,#table th{
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#table tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+#table th{
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: white;
+  color: #000;
+}
+
+.button{
+  border:none;
+  border-radius:8px;
+  color: white;
+  padding:9px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+}
+
+.button-primary{
+  background-color: rgb(0,123,255);
+}
+.button-success{
+  background-color: rgb(23, 166, 7);
+}
+.button-danger{
+  background-color: rgb(255,50,71);
+}
+.pagination a {
+  color: rgb(0, 0, 0);
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  margin-bottom: 10px;
+}
+
+.pagination a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+.pagecontainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.pagination {
+  margin-bottom: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.button-container .btn {
+  margin-right: 10px;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
 /* styles.css */
 
 /* Form Styles */
 
 .form-group {
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
   }
   
   .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
+    width: 20%;
+    margin-right: 10px;
   }
   
   .form-group input[type="text"],
   .form-group input[type="number"],
   .form-group input[type="date"],
   .form-group select {
-    width: 100%;
+    width: 80%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
   margin-top: 6px;
-  margin-bottom: 16px;
   resize: vertical;
   }
   
@@ -40,9 +177,9 @@
   }
 
   .container {
-    border-radius: 3px;
+    border-radius: 5px;
     background-color: #f2f2f2;
-    padding: 10px;
+    padding: 20px;
   }
   
   /* Button Styles */
@@ -113,43 +250,11 @@
     background-color: #f5f7f7;
 }
 
-
-.pagination a {
-    color: black;
-    float: left;
-    padding: 8px 16px;
-    text-decoration: none;
-    transition: background-color .3s;
-    margin-bottom: 10px;
-  }
-  
-  .pagination a.active {
-    background-color: dodgerblue;
-    color: white;
-  }
-  
-  .pagecontainer {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .pagination {
-    margin-bottom: 10px;
-  }
-  
-  .button-container {
-    margin-top: auto;
-  }
-  
-  .pagination a:hover:not(.active) {background-color: #ddd;}
-
   .btn {
     border: 1px; /* Remove borders */
     color: white; /* Add a text color */
     padding: 8px 20px; /* Add some padding */
     cursor: pointer; /* Add a pointer cursor on mouse-over */
-    margin-top: 10px;
-
   }
   
   .success {background-color: #04AA6D;} /* Green */
@@ -170,9 +275,4 @@
 
 
   /* form  */
-  div {
-    margin: 0px; /* Adjust the value as per your desired spacing */
-  }
-  
 
-  
